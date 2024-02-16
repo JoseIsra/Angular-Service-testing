@@ -1,27 +1,69 @@
-# NgTestingServices
+# Service testing code practice
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.4.
+Proyecto para practicar y aprender conceptos
+de Test en servicios de Angular.
 
-## Development server
+Conocimientos nuevos adquiridos
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Framework de Test y Runner
 
-## Code scaffolding
+En Angular se tiene configurado los tests con Jasmine y Karma
+Jasmine al igual que otros frameworks tienen
+prácticamente la misma sintaxis para hacer los suites y para hacer las pruebas de los suits
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Comandos de pruebas
 
-## Build
+### Apagar el modo Watcher
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Para apagar el modo Watcher del runner de test (que no reaccione a los cambios de código), usamos en consola el sgt comando
 
-## Running unit tests
+```
+  ng test --no-watch
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Configuración de Coverage
 
-## Running end-to-end tests
+Para visualizar el Coverage cubierto de los tests, se activa el runner de pruebas usando la terminal con el comando sgt:
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+```
+  ng test --code-coverage
+```
 
-## Further help
+> Recuerda que puedes combinar los comandos en una sola línea
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+### Configuración de un visualizador más elegante de Tests
+
+Tenemos como opcion utilizar `karma-mocha-reporter`. Lo que hará esta librería es permitirnos visualizar los reportes listados por suite y por prueba, como lo hace jest o vite.
+
+- Instalar librería
+
+```
+ npm i karma-mocha-reporter
+```
+
+- Configurar el archivo de karma.conf.js
+
+```
+// En la sección superior de plugiins, agregamos
+// el plugin nuevo de karma-mocha-reporter
+config.set({
+ ...
+ plugins: [
+   ....
+   require("karma-mocha-reporter"),
+ ]
+})
+```
+
+- Luego configuramos el visualizador de reporte de pruebas.En el mismo archivo de karma.conf.js
+
+```
+// en la parte inferior de config.set
+config.set({
+  ...
+  // aquí agregamos cómo queremos visualizar los reportes
+  reporters: ["mocha"],
+  browsers: ["Chrome"],
+  restartOnFileChange: true,
+})
+```
