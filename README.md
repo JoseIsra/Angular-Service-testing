@@ -67,3 +67,17 @@ config.set({
   restartOnFileChange: true,
 })
 ```
+
+### Prueba de servicios con dependencias
+
+La forma más decente de hacer las pruebas es utilizar un objeto porque ne JS se considera una clase y con este objeto, preparas las funciones que se desean probar por ejm:
+
+```
+it('should return "other  value" dsde un objeto fake', () => {
+    const fake = {
+      getValue: () => 'fake from object',
+    };
+    const masterService = new MasterService(<ValueService>fake);
+    expect(masterService.getValue()).toBe('fake from object');
+  });
+```

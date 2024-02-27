@@ -8,7 +8,6 @@ import { Calculator } from './calculator';
 })
 export class AppComponent implements OnInit {
   title = 'ng-testing-services';
-
   ngOnInit() {
     const calcu = new Calculator();
 
