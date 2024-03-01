@@ -3,15 +3,15 @@
 
 module.exports = function (config) {
   config.set({
-    basePath: "",
-    frameworks: ["jasmine", "@angular-devkit/build-angular"],
+    basePath: '',
+    frameworks: ['jasmine', '@angular-devkit/build-angular'],
     plugins: [
-      require("karma-jasmine"),
-      require("karma-chrome-launcher"),
-      require("karma-jasmine-html-reporter"),
-      require("karma-coverage"),
-      require("@angular-devkit/build-angular/plugins/karma"),
-      require("karma-mocha-reporter"),
+      require('karma-jasmine'),
+      require('karma-chrome-launcher'),
+      require('karma-jasmine-html-reporter'),
+      require('karma-coverage'),
+      require('@angular-devkit/build-angular/plugins/karma'),
+      require('karma-mocha-reporter'),
     ],
     client: {
       jasmine: {
@@ -26,9 +26,9 @@ module.exports = function (config) {
       suppressAll: true, // removes the duplicated traces
     },
     coverageReporter: {
-      dir: require("path").join(__dirname, "./coverage/ng-testing-services"),
-      subdir: ".",
-      reporters: [{ type: "html" }, { type: "text-summary" }],
+      dir: require('path').join(__dirname, './coverage/ng-testing-services'),
+      subdir: '.',
+      reporters: [{ type: 'html' }, { type: 'text-summary' }],
       check: {
         global: {
           statements: 80,
@@ -38,9 +38,15 @@ module.exports = function (config) {
         },
       },
     },
-    reporters: ["mocha"],
+    reporters: ['mocha'],
     // ChromeHeadless para servidores de CI / CD
-    browsers: ["Chrome"],
+    browsers: ['ChromeHeadless'],
+    customLaunchers: {
+      ChromeHeadlessCI: {
+        base: 'ChromeHeadless',
+        flags: ['--no-sandbox'],
+      },
+    },
     restartOnFileChange: true,
   });
 };

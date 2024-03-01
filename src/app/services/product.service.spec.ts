@@ -15,19 +15,34 @@ import {
   generateSingleProduct,
 } from '../models/product.mock';
 import { generateManyCategories } from '../models/category.mock';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from '@/interceptors/token.interceptor';
+import { TokenService } from './token.service';
 
-fdescribe('Test for Product Service: Api calls', () => {
+describe('Test for Product Service: Api calls', () => {
   const API_BASE = `${environment.API_URL}/api/v1`;
   let productService: ProductsService;
   //HttpTestingController para hcer mocking
   let httpController: HttpTestingController;
+  let tokenService: TokenService;
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [ProductsService],
+      providers: [
+        ProductsService,
+        TokenService,
+        // AGREGAMOS EL INTERCEPTOR PARA CARGARLO COMO SE HACE ON
+        // EL APP.MODULE
+        {
+          provide: HTTP_INTERCEPTORS,
+          useClass: TokenInterceptor,
+          multi: true,
+        },
+      ],
     });
     productService = TestBed.inject(ProductsService);
     httpController = TestBed.inject(HttpTestingController);
+    tokenService = TestBed.inject(TokenService);
   });
 
   afterEach(() => {
@@ -42,6 +57,9 @@ fdescribe('Test for Product Service: Api calls', () => {
     it('Debe retornar una lista de productos', (doneFn) => {
       //arrange
       const mockData: Product[] = generateManyProducts();
+      // forma de espiar bien alucinante
+      spyOn(tokenService, 'getToken').and.returnValue('123');
+
       //act
       productService.getAllSimple().subscribe((data) => {
         //assert
@@ -54,6 +72,8 @@ fdescribe('Test for Product Service: Api calls', () => {
       const url = `${environment.API_URL}/api/v1/products`;
       const req = httpController.expectOne(url);
       // reemplazamos el resultado con el mockdatra
+      const headers = req.request.headers;
+      expect(headers.get('Authorization')).toEqual('Bearer 123');
       req.flush(mockData);
     });
   });
