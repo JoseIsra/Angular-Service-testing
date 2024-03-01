@@ -7,7 +7,7 @@ describe('AppComponent', () => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule],
       declarations: [AppComponent],
-    })
+    }),
   );
 
   it('should create the app', () => {
@@ -26,8 +26,8 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain(
-      'ng-testing-services app is running!'
+    expect(compiled.querySelector('.container h1')?.textContent).toContain(
+      'Testing service practice',
     );
   });
 });
