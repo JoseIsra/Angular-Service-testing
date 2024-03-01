@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
 import { TokenService } from './token.service';
 import { AuthService } from './auth.service';
 
-fdescribe('AUTH Service test', () => {
+describe('AUTH Service test', () => {
   let httpController: HttpTestingController;
   const apiUrl = `${environment.API_URL}/api/auth`;
   let tokenService: TokenService;

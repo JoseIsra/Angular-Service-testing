@@ -8,7 +8,7 @@ import { CategoryService } from './category.service';
 import { environment } from 'src/environments/environment';
 import { Category } from 'src/app/models/category.model';
 
-fdescribe('CategoryService', () => {
+describe('CategoryService', () => {
   const apiUrl = `${environment.API_URL}/api/v1`;
   let service: CategoryService;
   let httpTestingController: HttpTestingController;
