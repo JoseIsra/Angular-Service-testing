@@ -9,8 +9,8 @@ jobs:
       - name: Node Setup
         uses: actions/setup-node@v3
         with:
-          node-version: 16.x
+          node-version: 18.x
       - name: Install the shit
-        uses: npm ci
+        run: npm ci
       - name: Run tests
-        uses: ng test --no-watch --code-coverage --browsers=ChromeHeadlessCI
+        run: ng test --no-watch --code-coverage --browsers=ChromeHeadlessCI
