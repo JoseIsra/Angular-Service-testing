@@ -1,12 +1,19 @@
 <section class="container">
   <h1>Products list component</h1>
 
+  <h3>Value promesa</h3>
+  <button class="promise-btn" (click)="callPromise()">Call promise</button>
+  <p data-id="promise-test">{{ valueData }}</p>
   <div class="mygrid">
-    <div *ngFor="let product of products">
-      <figure>
-        <img [src]="product.images[0]" alt="Imagen principal de un producto" />
-        <figcaption>{{ product.title }} - {{ product.price }}</figcaption>
-      </figure>
-    </div>
+    <app-product *ngFor="let product of products" [product]="product" />
   </div>
+  <button
+    class="products-action"
+    [disabled]="status === 'loading'"
+    (click)="getAllProducts()"
+  >
+    <span *ngIf="status === 'init' || status === 'success'"> Load more </span>
+    <span *ngIf="status === 'loading'">Loading</span>
+    <span *ngIf="status === 'error'">Error</span>
+  </button>
 </section>
