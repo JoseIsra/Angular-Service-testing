@@ -1,6 +1,6 @@
+import { ValueService } from '@/services/value.service';
 import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/app/models/product.model';
-import { CategoryService } from 'src/app/services/category/category.service';
 import { ProductsService } from 'src/app/services/product.service';
 
 @Component({
@@ -10,28 +10,39 @@ import { ProductsService } from 'src/app/services/product.service';
 })
 export class ProductsComponent implements OnInit {
   constructor(
+    private valueService: ValueService,
     private productService: ProductsService,
-    private categoryService: CategoryService,
   ) {}
   products: Product[] = [];
 
-  getCategories() {
-    this.categoryService.getAllCategories().subscribe((data) => {
-      console.log(data);
-    });
-  }
+  limit = 10;
+  offset = 0;
+  status: 'loading' | 'success' | 'error' | 'init' = 'init';
+
+  valueData = '';
+
   getAllProducts() {
-    this.productService.getAllSimple().subscribe((data) => {
-      console.log(
-        '🚀 ~ ProductsComponent ~ this.productService.getAllSimple ~ data:',
-        data,
-      );
-      this.products = data;
+    this.status = 'loading';
+    this.productService.getAll().subscribe({
+      next: (data) => {
+        this.products = [...this.products, ...data];
+        this.offset += this.limit;
+        this.status = 'success';
+      },
+      error: () => {
+        setTimeout(() => {
+          this.products = [];
+          this.status = 'error';
+        }, 3000);
+      },
     });
   }
 
   ngOnInit(): void {
-    this.getCategories();
     this.getAllProducts();
+  }
+
+  async callPromise() {
+    this.valueData = await this.valueService.getPromiseValue();
   }
 }

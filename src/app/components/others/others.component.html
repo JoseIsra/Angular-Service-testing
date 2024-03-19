@@ -1,0 +1,12 @@
+<section class="container">
+  <h3>Directiva</h3>
+  <h5 appHighlight="green">coloreado</h5>
+  <h5 [appHighlight]="colorPicked">de azulito?</h5>
+  <input [(ngModel)]="colorPicked" type="color" placeholder="pinta!" />
+
+  <h3>Pipe test</h3>
+  <p class="pipe-text">{{ 'my texto' | reverse }}</p>
+
+  <input class="text-input" [(ngModel)]="text" />
+  <p class="input-p">{{ text | reverse }}</p>
+</section>
